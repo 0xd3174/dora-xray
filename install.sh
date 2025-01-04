@@ -89,7 +89,7 @@ ask_for_settings() {
 }
 
 install_deps() {
-  apt-get install wget curl ufw jq micro socat crontab net-tools -y;
+  apt-get install wget curl ufw jq micro socat crontab net-tools unzip -y;
 
 	install_nginx;
 }
@@ -125,7 +125,9 @@ install_nginx() {
 }
 
 clone_repo() {
-  
+  wget https://github.com/0xd3174/dora-xray/archive/refs/heads/master.zip -O dora-xray.zip;
+  unzip dora-xray.zip;
+  cd dora-xray-master;
 }
 
 ############
@@ -215,13 +217,14 @@ setup_ufw() {
 }
 
 main() {
-  log_entry
+  log_entry;
 
   check_for_root;
   check_for_distribution;
   updates_warning;
   
   print_banner;
+  clone_repo;
   ask_for_settings;
   install_deps;
 
