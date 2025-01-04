@@ -1,0 +1,68 @@
+{
+  "log": {
+      "loglevel": "warning"
+  },
+  "inbounds": [
+      {
+          "listen": "@xhttp",
+          "protocol": "vless",
+          "settings": {
+              "decryption": "none",
+              "clients": []
+          },
+          "streamSettings": {
+              "network": "xhttp",
+              "xhttpSettings": {
+                  "path": "/lovelive"
+              }
+          },
+          "sniffing": {
+              "enabled": true,
+              "destOverride": [
+                  "http",
+                  "tls",
+                  "quic"
+              ]
+          }
+      },
+      {
+          "listen": "0.0.0.0",
+          "port": 443,
+          "protocol": "vless",
+          "settings": {
+              "decryption": "none",
+              "fallbacks": [
+                  {
+                      "dest": "@xhttp"
+                  }
+              ]
+          },
+          "streamSettings": {
+              "network": "tcp",
+              "security": "reality",
+              "realitySettings": {
+                  "target": "8443",
+                  "xver": 1, 
+                  "serverNames": [
+                      "{{SNI}}"
+
+                  ],
+                  "privateKey": "{{PRIVATE_KEY}}",
+                  "shortIds": [
+                      "{{SHORD_ID}}"
+                  ]
+              }
+          }
+      }
+  ],
+  "outbounds": [
+      {
+          "protocol": "freedom",
+          "tag": "direct"
+      },
+      {
+          "protocol": "blackhole",
+          "tag": "block"
+      }
+  ]
+}
