@@ -208,7 +208,7 @@ disable_ipv6() {
   if [[ ! "$(sysctl net.ipv6.conf.$interface_name.disable_ipv6)" == *"= 1" ]]; then
     echo "net.ipv6.conf.$interface_name.disable_ipv6 = 1" >> /etc/sysctl.conf
   fi
-  sysctl -p
+  sysctl -p;
 }
 
 setup_ufw() {
